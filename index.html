@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>앱 다운로드</title>
+<script>
+       window.onload = function() {
+           var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+           if (/android/i.test(userAgent)) {
+               window.location.href = "https://play.google.com/store/apps/details?id=your.android.app";
+           } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+               window.location.href = "https://apps.apple.com/app/idyour.ios.app";
+           } else {
+               document.getElementById("message").innerText = "지원되지 않는 기기입니다.";
+           }
+       };
+</script>
+</head>
+<body>
+<p id="message">잠시만 기다려 주세요...</p>
+</body>
+</html>
