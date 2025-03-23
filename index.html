@@ -6,27 +6,37 @@
     <title>LG ThinQ 실행 또는 다운로드</title>
     <script>
         function redirectToLGThinQ() {
-            var lgThinkQIntent = "intent://com.lgeha.nuts#Intent;scheme=lgthinq;package=com.lgeha.nuts;end;";
-            var appStoreURL = "https://play.google.com/store/apps/details?id=com.lgeha.nuts";
-            var iosAppStoreURL = "https://apps.apple.com/app/id993504342";
-            
+            var androidAppIntent = "intent://scan/#Intent;scheme=lgthinq;package=com.lgeha.nuts;end;";
+            var androidStoreURL = "https://play.google.com/store/apps/details?id=com.lgeha.nuts";
+            var iosAppScheme = "lgthinq://";
+            var iosStoreURL = "https://apps.apple.com/app/id993504342";
+
             var userAgent = navigator.userAgent || navigator.vendor;
-            
+
             if (/android/i.test(userAgent)) {
-                window.location = lgThinkQIntent;
+                // 1. 앱 실행 시도
+                window.location.href = androidAppIntent;
+
+                // 2. 일정 시간 후 Play Store 이동 (앱이 없을 경우 대비)
                 setTimeout(function() {
-                    window.location = appStoreURL;
-                }, 1500);
+                    window.location.href = androidStoreURL;
+                }, 1000);
             } else if (/iPhone|iPad|iPod/i.test(userAgent)) {
-                window.location = "lgthinq://";
+                // 1. iOS 앱 실행 시도
+                window.location.href = iosAppScheme;
+
+                // 2. 일정 시간 후 App Store 이동
                 setTimeout(function() {
-                    window.location = iosAppStoreURL;
-                }, 1500);
+                    window.location.href = iosStoreURL;
+                }, 1000);
             } else {
                 alert("이 기능은 모바일 기기에서만 사용할 수 있습니다.");
             }
         }
-        window.onload = redirectToLGThinQ;
+        
+        window.onload = function() {
+            setTimeout(redirectToLGThinQ, 500); // 페이지 로딩 후 0.5초 뒤 실행
+        };
     </script>
 </head>
 <body>
